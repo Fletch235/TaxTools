@@ -83,7 +83,8 @@ export function parseCsv(text: string): string[][] {
 }
 
 function readRows(text: string): Record<Column, string>[] {
-  const [header, ...rows] = parseCsv(text.replace(/^﻿/, ""));
+  const [header, ...rows] = parseCsv(text);
+  // trim() also strips a UTF-8 BOM from the first header.
   const index = new Map(header.map((name, i) => [name.trim().toUpperCase(), i]));
   for (const column of COLUMNS) {
     if (!index.has(column)) throw new Error(`BLS file is missing column ${column}`);

@@ -110,7 +110,7 @@ function render(): void {
   const tbody = byId("breakdown");
   tbody.replaceChildren(
     ...r.roles.map((role) => {
-      const marker = role.source === "national" ? " *" : role.topCoded ? " †" : "";
+      const marker = (role.source === "national" ? " *" : "") + (role.topCoded ? " †" : "");
       const rate = role.rate === null ? "No data" : (role.topCoded ? "at least " : "") + rateFormat.format(role.rate) + marker;
       const tr = document.createElement("tr");
       tr.append(

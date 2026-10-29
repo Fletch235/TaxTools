@@ -42,8 +42,11 @@ test("thousands separators in numbers", () => {
 });
 
 test("UTF-8 BOM on the header row", () => {
-  const data = buildWages("﻿" + state, national, occupations);
-  assert.equal(data.areas.WY.name, "Wyoming");
+  // The BOM sits on a required column, so a missing strip fails the column check.
+  const bom = String.fromCharCode(0xfeff);
+  const csv = `${bom}PRIM_STATE,AREA_TITLE,OCC_CODE,H_PCT25,H_MEDIAN,H_PCT75,A_PCT25,A_MEDIAN,A_PCT75\nWY,Wyoming,11-1021,1,2,3,,,\n`;
+  const data = buildWages(csv, national, occupations);
+  assert.deepEqual(data.areas.WY.wages["11-1021"], [1, 2, 3]);
 });
 
 test("national figures land under US with a readable name", () => {
