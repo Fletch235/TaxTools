@@ -2,10 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>S Corp Reasonable Salary Calculator</title>
+  <meta name="description" content="Estimate a reasonable S corp owner salary from BLS wage data for your state, using the IRS cost approach.">
+  <style>
+    [hidden] { display: none !important; }
+    body { font: 16px/1.5 system-ui, sans-serif; color: #1a1a1a; margin: 0; }
+    main { max-width: 40rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+    h1 { font-size: 1.6rem; margin: 0 0 0.25rem; }
+    label { display: block; margin-bottom: 0.75rem; font-weight: 600; }
+    select, input { display: block; width: 100%; box-sizing: border-box; margin-top: 0.25rem; padding: 0.4rem; font: inherit; }
+    input:invalid { outline: 2px solid #c00; }
+    fieldset { border: 1px solid #ccc; padding: 0.75rem; margin: 0 0 0.75rem; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+    .role { display: grid; grid-template-columns: 1fr 7rem auto; gap: 0 0.5rem; align-items: end; }
+    button { font: inherit; padding: 0.4rem 0.8rem; margin-bottom: 0.75rem; cursor: pointer; }
+    #result { border-top: 2px solid #1a1a1a; margin-top: 1rem; padding-top: 1rem; }
+    #salary { font-size: 2.2rem; font-weight: 700; margin: 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0 0.5rem; }
+    th, td { text-align: left; padding: 0.3rem 0.4rem; border-bottom: 1px solid #ddd; }
+    td.num, th.num { text-align: right; }
+    .muted, .soc-code { color: #555; font-size: 0.875rem; }
+    .print-only { display: none; }
+    footer { margin-top: 2rem; }
+    @media (max-width: 30rem) {
+      .pair { grid-template-columns: 1fr; }
+      .role { grid-template-columns: 1fr 5rem auto; }
+    }
+    @media print {
+      form, .actions, #prompt { display: none !important; }
+      .print-only { display: block; }
+      main { max-width: none; padding: 0; }
+    }
+  </style>
   <script type="module" src="main.js"></script>
 </head>
 <body>
-  <h1></h1>
+<main>
+  <h1>S Corp Reasonable Salary Calculator</h1>
+  <p class="muted">Estimates a reasonable W-2 salary by pricing each role you fill at the market wage for your state. This is the IRS "cost approach."</p>
+
+  <form id="form">
+    <div class="pair">
+      <label>State
+        <select id="area"><option value="">Choose a state</option></select>
+      </label>
+      <label>Experience
+        <select id="level">
+          <option value="entry">Entry (25th percentile)</option>
+          <option value="mid" selected>Mid (median)</option>
+          <option value="senior">Senior (75th percentile)</option>
+        </select>
+      </label>
+    </div>
+
+    <fieldset>
+      <legend>Roles you fill in the business</legend>
+      <div id="roles"></div>
+      <button type="button" id="add-role">Add role</button>
+    </fieldset>
+
+    <div class="pair">
+      <label>Current W-2 salary
+        <input id="current-salary" type="number" min="0" step="any" inputmode="decimal" placeholder="0">
+      </label>
+      <label>Distributions taken this year
+        <input id="distributions" type="number" min="0" step="any" inputmode="decimal" placeholder="0">
+      </label>
+    </div>
+  </form>
+
+  <template id="role-template">
+    <div class="role">
+      <label>Occupation
+        <select class="soc"><option value="">Choose an occupation</option></select>
+      </label>
+      <label>Hours/week
+        <input class="hours" type="number" min="0" max="80" step="any" value="40">
+      </label>
+      <button type="button" class="remove">Remove</button>
+    </div>
+  </template>
+
+  <p id="prompt" aria-live="polite">Loading wage data…</p>
+
+  <section id="result" aria-live="polite" hidden>
+    <p class="print-only" id="report-header"></p>
+    <p class="muted">Recommended salary</p>
+    <p id="salary"></p>
+    <p id="cap-note" hidden></p>
+    <p id="tax-line"></p>
+    <table>
+      <thead><tr><th>Role</th><th class="num">Hours/week</th><th class="num">Hourly rate</th><th class="num">Annual cost</th></tr></thead>
+      <tbody id="breakdown"></tbody>
+    </table>
+    <p id="legend" class="muted"></p>
+    <p class="actions">
+      <button type="button" id="print">Print report</button>
+      <a href="mailto:fletcherpstuart@gmail.com?subject=Referral%20request%20from%20the%20S%20corp%20salary%20calculator">Email me for a referral</a>
+    </p>
+  </section>
+
+  <footer class="muted">
+    <p>Wage data: U.S. Bureau of Labor Statistics, Occupational Employment and Wage Statistics, <span id="data-period">May 2025</span>. Payroll tax uses <span id="tax-year">2026</span> rates, employer and employee shares combined.</p>
+    <p>This is an estimate, not tax advice. Talk to a CPA before setting your salary.</p>
+  </footer>
+</main>
 </body>
 </html>
