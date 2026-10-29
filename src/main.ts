@@ -47,6 +47,7 @@ async function start(): Promise<void> {
   });
   form.addEventListener("input", render);
   byId("print").addEventListener("click", () => window.print());
+  prompt.textContent = "Choose a state and an occupation to see a salary.";
   render();
 }
 
@@ -87,7 +88,6 @@ function readInputs(): Inputs {
 function render(): void {
   const inputs = readInputs();
   const ready = inputs.area !== "" && inputs.roles.length > 0;
-  prompt.textContent = "Choose a state and an occupation to see a salary.";
   prompt.hidden = ready;
   result.hidden = !ready;
   if (!ready) return;

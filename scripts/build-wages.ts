@@ -2,11 +2,11 @@
 // Yearly refresh: see README. Run with `npm run wages`.
 
 import { readFileSync, writeFileSync } from "node:fs";
-import type { Wage, WageData } from "../src/calc.ts";
+import { NATIONAL, type Wage, type WageData } from "../src/calc.ts";
 
 // Update both with each new BLS release. The top code is in the file's
 // "Field Descriptions" sheet: "#" means at least this hourly wage.
-export const PERIOD = "May 2025";
+const PERIOD = "May 2025";
 export const TOP_CODE = 115;
 
 const STATE_CSV = "data/raw/state.csv";
@@ -14,7 +14,7 @@ const NATIONAL_CSV = "data/raw/national.csv";
 const OUTPUT = "public/wages.json";
 const HOURS_PER_YEAR = 2080;
 
-export const OCCUPATIONS: Record<string, string> = {
+const OCCUPATIONS: Record<string, string> = {
   "11-1021": "General and Operations Managers",
   "11-2021": "Marketing Managers",
   "11-2022": "Sales Managers",
@@ -115,11 +115,11 @@ export function buildWages(stateCsv: string, nationalCsv: string, occupations: R
   const rows = [...readRows(nationalCsv), ...readRows(stateCsv)].filter((row) => row.OCC_CODE in occupations);
   for (const row of rows) {
     const code = row.PRIM_STATE;
-    areas[code] ??= { name: code === "US" ? "United States" : row.AREA_TITLE, wages: {} };
+    areas[code] ??= { name: code === NATIONAL ? "United States" : row.AREA_TITLE, wages: {} };
     areas[code].wages[row.OCC_CODE] = toWage(row);
   }
   for (const soc of Object.keys(occupations)) {
-    if (!(soc in (areas.US?.wages ?? {}))) throw new Error(`Occupation ${soc} is not in the national file`);
+    if (!(soc in (areas[NATIONAL]?.wages ?? {}))) throw new Error(`Occupation ${soc} is not in the national file`);
   }
   return { period: PERIOD, topCode: TOP_CODE, occupations: sortKeys(occupations), areas: sortAreas(areas) };
 }
