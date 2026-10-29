@@ -1,0 +1,13 @@
+{
+  "name": "taxtools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test \"src/*.test.ts\" \"scripts/*.test.ts\"",
+    "wages": "node scripts/build-wages.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}
