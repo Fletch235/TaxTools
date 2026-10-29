@@ -80,6 +80,12 @@ test("top-coded rate is flagged", () => {
   assert.equal(calculate(data, inputs({ area: "WY", roles: [{ soc: "11-1021", hoursPerWeek: 1 }] })).roles[0].topCoded, false);
 });
 
+test("published wage above the top code is not flagged", () => {
+  const high: WageData = { ...data, areas: { ...data.areas, WY: { name: "Wyoming", wages: { "11-1021": [45, 55, 133.24] } } } };
+  const r = calculate(high, inputs({ area: "WY", level: "senior", roles: [{ soc: "11-1021", hoursPerWeek: 1 }] }));
+  assert.equal(r.roles[0].topCoded, false);
+});
+
 test("no roles: salary 0", () => {
   const r = calculate(data, inputs({}));
   assert.equal(r.salary, 0);

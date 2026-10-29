@@ -97,7 +97,8 @@ function priceRole(data: WageData, inputs: Inputs, role: Role): RoleResult {
     ...role,
     rate,
     source,
-    topCoded: rate !== null && rate >= data.topCode,
+    // Only the "#" placeholder equals the top code; BLS publishes real wages above it.
+    topCoded: rate === data.topCode,
     cost: rate === null ? 0 : rate * role.hoursPerWeek * WEEKS_PER_YEAR,
   };
 }

@@ -30,7 +30,7 @@ npm test
 2. Open each XLSX in Excel, LibreOffice, or Google Sheets and save the data sheet as CSV:
    - state file to `data/raw/state.csv`
    - national file to `data/raw/national.csv`
-3. In `scripts/build-wages.ts`, update `PERIOD`. Check the file's "Field Descriptions" sheet for the `#` top-code hourly wage and update `TOP_CODE`.
+3. In `scripts/build-wages.ts`, update `PERIOD`. Check the file's "Field Descriptions" sheet for the `#` top-code hourly wage and update `TOP_CODE`. BLS now publishes real wages above that figure, so only `#` cells are treated as top-coded.
 4. Run `npm run wages`. It fails with a clear message if a column or starter occupation is missing.
 5. Review the diff of `public/wages.json` and commit it. `data/raw/` is not committed.
 
