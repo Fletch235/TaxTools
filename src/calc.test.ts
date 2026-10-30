@@ -25,7 +25,7 @@ test("single role: rate x hours x 52", () => {
 
 test("two roles sum", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 20 }, { soc: "43-3031", hoursPerWeek: 20 }] }));
-  assert.equal(r.total, 78_000); // 50*20*52 + 25*20*52
+  assert.equal(r.salary, 78_000); // 50*20*52 + 25*20*52
 });
 
 test("experience level picks 25th, 50th, 75th percentile", () => {
@@ -35,42 +35,45 @@ test("experience level picks 25th, 50th, 75th percentile", () => {
   assert.equal(calculate(data, inputs({ level: "senior", roles: role })).roles[0].rate, 60);
 });
 
-test("AE1: capped at cash taken", () => {
+test("AE1: cash taken below salary is reported, salary unchanged", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 20_000, distributions: 50_000 }));
-  assert.equal(r.total, 104_000);
-  assert.equal(r.salary, 70_000);
-  assert.equal(r.capped, true);
+  assert.equal(r.salary, 104_000);
+  assert.equal(r.cashTaken, 70_000);
 });
 
-test("cash taken above total: not capped", () => {
+test("cash taken above salary: no note", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 50_000, distributions: 100_000 }));
   assert.equal(r.salary, 104_000);
-  assert.equal(r.capped, false);
+  assert.equal(r.cashTaken, null);
 });
 
-test("cash taken entered as zero: salary 0, capped", () => {
+test("$50 salary and $50 distributions: salary stays at role value, $100 reported", () => {
+  const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 50, distributions: 50 }));
+  assert.equal(r.salary, 104_000);
+  assert.equal(r.cashTaken, 100);
+});
+
+test("cash taken entered as zero: $0 reported", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 0, distributions: 0 }));
-  assert.equal(r.salary, 0);
-  assert.equal(r.capped, true);
+  assert.equal(r.cashTaken, 0);
 });
 
-test("salary entered, distributions blank: no cap", () => {
+test("salary entered, distributions blank: no note", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 1 }));
   assert.equal(r.salary, 104_000);
-  assert.equal(r.capped, false);
+  assert.equal(r.cashTaken, null);
   assert.equal(r.taxAtCurrent, payrollTax(1));
 });
 
-test("distributions entered, salary blank: capped at distributions", () => {
+test("distributions entered, salary blank: distributions reported", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], distributions: 30_000 }));
-  assert.equal(r.salary, 30_000);
-  assert.equal(r.capped, true);
+  assert.equal(r.cashTaken, 30_000);
 });
 
-test("both money fields blank: no cap", () => {
+test("both money fields blank: no note", () => {
   const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }] }));
   assert.equal(r.salary, 104_000);
-  assert.equal(r.capped, false);
+  assert.equal(r.cashTaken, null);
 });
 
 test("AE2: suppressed state wage falls back to national", () => {
@@ -102,7 +105,7 @@ test("published wage above the top code is not flagged", () => {
 test("no roles: salary 0", () => {
   const r = calculate(data, inputs({}));
   assert.equal(r.salary, 0);
-  assert.equal(r.capped, false);
+  assert.equal(r.cashTaken, null);
 });
 
 test("role with 0 hours contributes 0", () => {

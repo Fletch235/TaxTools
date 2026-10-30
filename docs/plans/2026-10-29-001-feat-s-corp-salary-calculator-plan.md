@@ -36,7 +36,7 @@ S corp owners must pay themselves reasonable compensation before taking distribu
 
 - R1. Recommended salary is the sum over roles of: state hourly wage for the occupation at the chosen percentile × hours per week × 52.
 - R2. Experience level Entry, Mid, and Senior selects the 25th, 50th, and 75th percentile wage.
-- R3. Recommended salary is capped at total cash taken (current salary plus distributions), and the page says when the cap applies. The cap applies only once distributions has a value; a blank field means not entered, not $0. Current salary alone only feeds the tax comparison.
+- R3. Recommended salary is always the role total. When distributions are entered and cash taken (current salary plus distributions) is below it, a note says that if this is the full year, a W-2 salary equal to cash taken is enough. A blank field means not entered, not $0; current salary alone only feeds the tax comparison.
 - R4. When BLS publishes no wage for an occupation in the chosen state, the calculation uses the national wage and labels that role as using the national rate.
 - R5. The page shows payroll tax at the recommended salary and at the current salary, using 2026 rates: Social Security 12.4% on wages up to $184,500, Medicare 2.9% on all wages, and Additional Medicare 0.9% on wages over $200,000.
 
@@ -60,9 +60,9 @@ S corp owners must pay themselves reasonable compensation before taking distribu
 
 ### Acceptance Examples
 
-- AE1. Cap applies. Covers R3.
+- AE1. Cash-taken note shows. Covers R3.
   - **Given:** roles sum to $90,000; current salary $20,000; distributions $50,000.
-  - **Then:** recommended salary shows $70,000 with a note that it is capped at the cash taken.
+  - **Then:** recommended salary shows the role total, with a note that a $70,000 W-2 is enough if that is the full year.
 - AE2. National fallback. Covers R4.
   - **Given:** a state where BLS suppresses the wage for the chosen occupation.
   - **Then:** that role uses the national wage and its row is labeled as the national rate on screen and in print.

@@ -100,8 +100,11 @@ function render(): void {
   byId("salary").textContent = dollars.format(r.salary);
 
   const capNote = byId("cap-note");
-  capNote.hidden = !r.capped;
-  capNote.textContent = `Capped at the ${dollars.format(r.salary)} you took out of the business. Your roles total ${dollars.format(r.total)}.`;
+  capNote.hidden = r.cashTaken === null;
+  if (r.cashTaken !== null) {
+    const taken = dollars.format(r.cashTaken);
+    capNote.textContent = `You took ${taken} out of the business. The IRS can only treat money you took out as wages, so if ${taken} is your whole year, a W-2 salary of ${taken} is enough.`;
+  }
 
   byId("tax-line").textContent =
     `Payroll tax at this salary: ${dollars.format(r.taxAtSalary)} a year.` +

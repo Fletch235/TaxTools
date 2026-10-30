@@ -51,28 +51,27 @@ export interface RoleResult extends Role {
 
 export interface Result {
   roles: RoleResult[];
-  total: number;
   salary: number;
-  capped: boolean;
+  // Salary plus distributions, set only when it is below the salary. The IRS can
+  // only treat money taken out as wages, so if this is the full year, a W-2 of
+  // this amount is enough.
+  cashTaken: number | null;
   taxAtSalary: number;
   taxAtCurrent: number | null;
 }
 
 export function calculate(data: WageData, inputs: Inputs): Result {
   const roles = inputs.roles.map((role) => priceRole(data, inputs, role));
-  const total = roles.reduce((sum, role) => sum + role.cost, 0);
+  const salary = roles.reduce((sum, role) => sum + role.cost, 0);
 
-  // The cap needs distributions: a blank field means not entered, not $0.
-  // Salary alone only feeds the tax comparison.
+  // Needs distributions: a blank field means not entered, not $0.
   const cashTaken = (inputs.currentSalary ?? 0) + (inputs.distributions ?? 0);
-  const capped = inputs.distributions !== null && total > cashTaken;
-  const salary = capped ? cashTaken : total;
+  const belowSalary = inputs.distributions !== null && cashTaken < salary;
 
   return {
     roles,
-    total,
     salary,
-    capped,
+    cashTaken: belowSalary ? cashTaken : null,
     taxAtSalary: payrollTax(salary),
     taxAtCurrent: inputs.currentSalary === null ? null : payrollTax(inputs.currentSalary),
   };
