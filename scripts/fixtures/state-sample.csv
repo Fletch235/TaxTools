@@ -1,0 +1,6 @@
+AREA,AREA_TITLE,PRIM_STATE,OCC_CODE,OCC_TITLE,O_GROUP,TOT_EMP,H_PCT25,H_MEDIAN,H_PCT75,A_PCT25,A_MEDIAN,A_PCT75
+56,Wyoming,WY,11-1021,General and Operations Managers,detailed,"5,230",40.10,52.25,#,"83,400","108,680",#
+56,Wyoming,WY,43-3031,"Bookkeeping, Accounting, and Auditing Clerks",detailed,"3,100",*,*,*,*,*,*
+56,Wyoming,WY,25-2021,Elementary School Teachers,detailed,"2,900",,,,"55,000","62,400","70,200"
+56,Wyoming,WY,99-9999,Not In Starter List,detailed,10,1,2,3,1,2,3
+06,California,CA,11-1021,General and Operations Managers,detailed,"300,000",45.00,"1,060.50",90.00,"93,600","2,205,840","187,200"

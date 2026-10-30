@@ -1,0 +1,4 @@
+AREA,AREA_TITLE,PRIM_STATE,OCC_CODE,OCC_TITLE,O_GROUP,TOT_EMP,H_PCT25,H_MEDIAN,H_PCT75,A_PCT25,A_MEDIAN,A_PCT75
+99,U.S.,US,11-1021,General and Operations Managers,detailed,"3,500,000",38.00,49.00,75.00,"79,040","101,920","156,000"
+99,U.S.,US,43-3031,"Bookkeeping, Accounting, and Auditing Clerks",detailed,"1,600,000",19.50,23.00,27.40,"40,560","47,840","56,990"
+99,U.S.,US,25-2021,Elementary School Teachers,detailed,"1,400,000",,,,"52,000","63,670","80,000"
