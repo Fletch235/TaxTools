@@ -38,4 +38,4 @@ The occupation list lives in `OCCUPATIONS` in `scripts/build-wages.ts`.
 
 ### Payroll tax (each January)
 
-Update `TAX_YEAR` and the rate constants at the top of `src/calc.ts`. The 2027 Social Security wage base is $192,300.
+Update `TAX_YEAR` and the rate constants at the top of `src/calc.ts`, and the year in the `<title>` of `public/index.html`. The 2027 Social Security wage base is $192,300.

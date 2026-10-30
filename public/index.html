@@ -3,8 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>S Corp Reasonable Salary Calculator</title>
-  <meta name="description" content="Estimate a reasonable S corp owner salary from BLS wage data for your state, using the IRS cost approach.">
+  <title>S Corp Reasonable Salary Calculator by State (2026)</title>
+  <meta name="description" content="Free S corp reasonable compensation calculator. Price each role you fill at BLS wages for your state and get a defensible owner salary using the IRS cost approach.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="S Corp Reasonable Salary Calculator by State">
+  <meta property="og:description" content="Estimate a reasonable S corp owner salary from BLS wage data for your state, using the IRS cost approach.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>$</text></svg>">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "S Corp Reasonable Salary Calculator",
+    "description": "Estimates a reasonable W-2 salary for S corp owners by pricing each role they fill at BLS wages for their state, using the IRS cost approach.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
   <style>
     [hidden] { display: none !important; }
     body { font: 16px/1.5 system-ui, sans-serif; color: #1a1a1a; margin: 0; }
@@ -24,13 +41,14 @@
     td.num, th.num { text-align: right; }
     .muted, .soc-code { color: #555; font-size: 0.875rem; }
     .print-only { display: none; }
+    .about h2 { font-size: 1.2rem; margin: 2rem 0 0.5rem; }
     footer { margin-top: 2rem; }
     @media (max-width: 30rem) {
       .pair { grid-template-columns: 1fr; }
       .role { grid-template-columns: 1fr 5rem auto; }
     }
     @media print {
-      form, .actions, #prompt { display: none !important; }
+      form, .actions, #prompt, .about { display: none !important; }
       .print-only { display: block; }
       main { max-width: none; padding: 0; }
     }
@@ -101,6 +119,18 @@
       <button type="button" id="print">Print report</button>
       <a href="mailto:fletcherpstuart@gmail.com?subject=Referral%20request%20from%20the%20S%20corp%20salary%20calculator">Email me for a referral</a>
     </p>
+  </section>
+
+  <section class="about">
+    <h2>What is S corp reasonable compensation?</h2>
+    <p>If you own an S corporation and work in the business, the IRS requires you to pay yourself a reasonable W-2 salary before you take distributions. Salary is subject to Social Security and Medicare tax; distributions are not. Paying yourself too little to save payroll tax is a common audit target, and the IRS can reclassify distributions as wages, with back taxes and penalties.</p>
+
+    <h2>How this calculator works</h2>
+    <p>It uses the cost approach, one of the three methods in IRS guidance on reasonable compensation. List the roles you fill, such as general manager, bookkeeper, or salesperson, and the hours you spend on each. The calculator prices each role at what employers in your state pay for that occupation, using Bureau of Labor Statistics wage data, and adds them up. Your experience level picks the 25th, 50th, or 75th percentile wage.</p>
+    <p>Salary cannot exceed what the business actually paid out. If you enter your current salary and distributions, the recommendation is capped at that total.</p>
+
+    <h2>What the IRS looks at</h2>
+    <p>IRS fact sheet FS-2008-25 lists factors including your training and experience, duties and responsibilities, time devoted to the business, what comparable businesses pay for similar services, and how you pay non-owner employees. In <i>Watson v. United States</i> (8th Cir. 2012), a CPA who paid himself $24,000 while taking much larger distributions had his reasonable salary set at about $91,000 by the court.</p>
   </section>
 
   <footer class="muted">
