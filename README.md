@@ -39,10 +39,3 @@ The occupation list lives in `OCCUPATIONS` in `scripts/build-wages.ts`.
 ### Payroll tax (each January)
 
 Update `TAX_YEAR` and the rate constants at the top of `src/calc.ts`. The 2027 Social Security wage base is $192,300.
-
-## Deploy (Vercel Hobby)
-
-1. Push this repo to GitHub.
-2. In Vercel, import the repo. Framework preset: **Other**. Keep the default build command (`npm run build`) and output directory (`public`).
-
-The Hobby plan is for non-commercial use only. The referral link is fine while referrals are unpaid. Before earning referral fees, client revenue, or ad income from the site, move to Vercel Pro or a host that allows commercial use on its free plan, such as Cloudflare Pages.
