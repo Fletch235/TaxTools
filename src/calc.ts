@@ -62,10 +62,10 @@ export function calculate(data: WageData, inputs: Inputs): Result {
   const roles = inputs.roles.map((role) => priceRole(data, inputs, role));
   const total = roles.reduce((sum, role) => sum + role.cost, 0);
 
-  // Both money fields blank means not entered yet, so no cap.
-  const moneyEntered = inputs.currentSalary !== null || inputs.distributions !== null;
+  // The cap needs distributions: a blank field means not entered, not $0.
+  // Salary alone only feeds the tax comparison.
   const cashTaken = (inputs.currentSalary ?? 0) + (inputs.distributions ?? 0);
-  const capped = moneyEntered && total > cashTaken;
+  const capped = inputs.distributions !== null && total > cashTaken;
   const salary = capped ? cashTaken : total;
 
   return {

@@ -49,8 +49,21 @@ test("cash taken above total: not capped", () => {
 });
 
 test("cash taken entered as zero: salary 0, capped", () => {
-  const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 0 }));
+  const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 0, distributions: 0 }));
   assert.equal(r.salary, 0);
+  assert.equal(r.capped, true);
+});
+
+test("salary entered, distributions blank: no cap", () => {
+  const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], currentSalary: 1 }));
+  assert.equal(r.salary, 104_000);
+  assert.equal(r.capped, false);
+  assert.equal(r.taxAtCurrent, payrollTax(1));
+});
+
+test("distributions entered, salary blank: capped at distributions", () => {
+  const r = calculate(data, inputs({ roles: [{ soc: "11-1021", hoursPerWeek: 40 }], distributions: 30_000 }));
+  assert.equal(r.salary, 30_000);
   assert.equal(r.capped, true);
 });
 

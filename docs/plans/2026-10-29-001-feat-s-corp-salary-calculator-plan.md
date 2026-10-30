@@ -36,7 +36,7 @@ S corp owners must pay themselves reasonable compensation before taking distribu
 
 - R1. Recommended salary is the sum over roles of: state hourly wage for the occupation at the chosen percentile × hours per week × 52.
 - R2. Experience level Entry, Mid, and Senior selects the 25th, 50th, and 75th percentile wage.
-- R3. Recommended salary is capped at total cash taken (current salary plus distributions), and the page says when the cap applies. The cap applies only once at least one of the two money fields has a value. Both blank means not entered yet, with no cap.
+- R3. Recommended salary is capped at total cash taken (current salary plus distributions), and the page says when the cap applies. The cap applies only once distributions has a value; a blank field means not entered, not $0. Current salary alone only feeds the tax comparison.
 - R4. When BLS publishes no wage for an occupation in the chosen state, the calculation uses the national wage and labels that role as using the national rate.
 - R5. The page shows payroll tax at the recommended salary and at the current salary, using 2026 rates: Social Security 12.4% on wages up to $184,500, Medicare 2.9% on all wages, and Additional Medicare 0.9% on wages over $200,000.
 
